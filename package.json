@@ -1,0 +1,14 @@
+{
+  "name": "dwh-interface",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node ./bin/www"
+  },
+  "dependencies": {
+    "googleapis": "x",
+    "express": "4.x",
+    "pg": "x",
+    "maxmind-db-reader": "x"
+  }
+}
