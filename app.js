@@ -35,7 +35,7 @@ app.get('/collect', (req, res) => {
         created_at: new Date(),
         visit_id: 'rewrew'
     }
-    res.send(req.headers)
+    res.send(event)
     insertEvent(event, (err, resp) => {
         //res.send(resp)
     })
