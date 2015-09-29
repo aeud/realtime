@@ -6,9 +6,10 @@
     "start": "node ./bin/www"
   },
   "dependencies": {
-    "googleapis": "x",
     "express": "4.x",
     "pg": "x",
-    "maxmind-db-reader": "x"
+    "maxmind-db-reader": "x",
+    "sql": "x",
+    "async": "x"
   }
 }

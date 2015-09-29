@@ -16,24 +16,29 @@
 
 var app = require('express')()
 var http = require('http').Server(app)
-var pg = require('pg')
-var conString = 'postgres://postgres:root@localhost/mike'
-var mmdbreader = require('maxmind-db-reader')
-var countries = mmdbreader.openSync('/Users/adrien/Downloads/GeoLite2-Country.mmdb')
+//var mmdbreader = require('maxmind-db-reader')
+//var countries = mmdbreader.openSync(__dirname + '/countries.mmdb')
+var sql = require('sql')
+sql.setDialect('postgres')
+var models = require('./models')
+var psql = require('./lib/psql')
 
-var client = new pg.Client(conString)
-client.connect(err => {
-    if (err) throw err
-    client.query('select 1', (err, resp) => {
-        console.log(resp)
-        client.end()
-    })
-})
+var insertEvent = (event, callback) => {
+    psql.query(models.event.insert(event).toQuery(), callback)
+}
 
 app.get('/collect', (req, res) => {
     var ip = req.ip
-    var geodata = countries.getGeoDataSync('118.189.135.150')
-    res.send(ip)
+    //var geodata = countries.getGeoDataSync('118.189.135.150')
+    var event = {
+        ip: ip,
+        created_at: new Date(),
+        visit_id: 'rewrew'
+    }
+    insertEvent(event, (err, resp) => {
+        res.send(resp)
+    })
+    
 })
 
 http.listen(3000, () => {
