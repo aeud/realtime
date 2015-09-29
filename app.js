@@ -30,7 +30,7 @@ var insertEvent = (event, callback) => {
 app.set('trust proxy', true)
 
 app.get('/collect', (req, res) => {
-    var ip = req.ip
+    var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress
     //var geodata = countries.getGeoDataSync('118.189.135.150')
     var event = {
         ip: ip,
