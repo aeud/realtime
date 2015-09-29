@@ -27,6 +27,8 @@ var insertEvent = (event, callback) => {
     psql.query(models.event.insert(event).toQuery(), callback)
 }
 
+app.set('trust proxy', true)
+
 app.get('/collect', (req, res) => {
     var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress
     //var geodata = countries.getGeoDataSync('118.189.135.150')
