@@ -12,7 +12,7 @@ exports.event = sql.define({
             dataType: 'timestamp'
         }, {
             name: 'ip',
-            dataType: 'varchar(16)'
+            dataType: 'varchar(64)'
         }, {
             name: 'local_variant_id',
             dataType: 'integer'
