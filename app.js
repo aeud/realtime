@@ -43,7 +43,7 @@ app.get('/collect', (req, res) => {
     var brand_name = req.query.b || 'unknown'
     var image_url = req.query.i || 'unknown'
     var variant_name = req.query.v || 'unknown'
-    var price = parseFloat(req.query.p || 0)
+    var price = parseFloat(req.query.psgd || 0)
     res.sendFile(__dirname + '/pixel.gif')
     var event = {
         ip: ip,
@@ -57,7 +57,7 @@ app.get('/collect', (req, res) => {
         price: price,
         image_url: image_url
     }
-    /*if (variantId && account) {
+    if (variantId && account) {
         insertEvent(event, (err, resp) => {
             insertIp(ip, (err, resp) => {
                 event.latitude = resp.latitude
@@ -66,7 +66,7 @@ app.get('/collect', (req, res) => {
                 io.emit('message', event)
             })
         })
-    }*/
+    }
 })
 
 app.get('', (req, res) => {
