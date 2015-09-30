@@ -31,23 +31,19 @@ var insertIp = (ip, callback) => {
     })
 }
 
-var images = [
-    'http://s3.lximg.com/images/pictures/12209/featured_f809e3206785594300de5e299aef02cf7f558e12_1442475292_FM03_THE-POREFESSIONAL-AGENT-ZERO-SHINE_WEB.jpg',
-    'http://s3.lximg.com/images/pictures/1620/featured_8da5968ab8d33c574e5804153fe768d0866f4ca9_juliehewett_bijou_lulu.png',
-    'http://s0.lximg.com/images/pictures/7169/featured_1bc15ed252df8252bbbd848d47e1514112d5b1ca_1412655845_MRS_Secret_20Weapon_2024Hr_20Mascara-purple.jpg',
-    'http://s3.lximg.com/images/pictures/6178/featured_30960beb1f42efcb2f0746ae1cac0067c24855b7_1408958812_Micro_Polish_Cleanser_100ml_update.jpg',
-    'http://s2.lximg.com/images/pictures/7872/featured_358318594f6367c1267e0be3be13db13a59be913_1415269156_pink-elements-complete-eye-set-l.jpg'
-]
-var i = 0;
-
 app.set('trust proxy', true)
 
 app.get('/collect', (req, res) => {
     var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress
     ip = /(\d){1,3}\.(\d){1,3}\.(\d){1,3}\.(\d){1,3}/.test(ip) ? ip : '118.189.135.150';
-    var visitId = req.query.vid || 'unknown'
-    var variantId = req.query.variant && /^\d+$/g.test(req.query.variant) ? req.query.variant : null
+    var visitId = req.query.uid || 'unknown'
+    var variantId = req.query.vid && /^\d+$/g.test(req.query.variant) ? req.query.variant : null
     var account = req.query.a && /^(default|indonesia|thailand)$/g.test(req.query.a) ? req.query.a : null
+    var product_name = req.query.p || 'unknown'
+    var brand_name = req.query.b || 'unknown'
+    var image_url = req.query.i || 'unknown'
+    var variant_name = req.query.v || 'unknown'
+    var price = parseFloat(req.query.p || 0)
     res.sendFile(__dirname + '/pixel.gif')
     var event = {
         ip: ip,
@@ -55,36 +51,30 @@ app.get('/collect', (req, res) => {
         visit_id: visitId,
         local_variant_id: variantId,
         account: account,
+        product_name: product_name,
+        brand_name: brand_name,
+        variant_name: variant_name,
+        price: price,
+        image_url: image_url
     }
-    if (variantId && account) {
+    /*if (variantId && account) {
         insertEvent(event, (err, resp) => {
             insertIp(ip, (err, resp) => {
+                event.latitude = resp.latitude
+                event.longitude = resp.longitude
                 console.log(resp)
-                io.emit('message', { c: [50, parseInt(100 * Math.random())] })
+                io.emit('message', event)
             })
         })
-    }  
+    }*/
 })
 
 app.get('', (req, res) => {
     res.sendFile(__dirname + '/index.html')
 })
 
-io.on('connection', socket => socket.emit('init', [
-    { c: [parseInt(20 * Math.random()), parseInt(100 * Math.random())], image: images[i++ % images.length]  },
-    { c: [parseInt(20 * Math.random()), parseInt(100 * Math.random())], image: images[i++ % images.length]  },
-    { c: [parseInt(20 * Math.random()), parseInt(100 * Math.random())], image: images[i++ % images.length]  },
-    { c: [parseInt(20 * Math.random()), parseInt(100 * Math.random())], image: images[i++ % images.length]  },
-    { c: [parseInt(20 * Math.random()), parseInt(100 * Math.random())], image: images[i++ % images.length]  },
-    { c: [parseInt(20 * Math.random()), parseInt(100 * Math.random())], image: images[i++ % images.length]  },
-    { c: [parseInt(20 * Math.random()), parseInt(100 * Math.random())], image: images[i++ % images.length]  },
-]));
+io.on('connection', socket => socket.emit('init', [ ]));
 
 http.listen(3000, () => {
-    console.log('listening on *:3000')
+    console.log('listening on localhost:3000')
 })
-
-setInterval(x => io.emit('message', {
-    c: [parseInt(20 * Math.random()), parseInt(100 * Math.random())],
-    image: images[i++ % images.length]
-}), 5000)

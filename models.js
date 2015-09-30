@@ -19,6 +19,21 @@ exports.event = sql.define({
         }, {
             name: 'account',
             dataType: 'varchar(20)'
+        }, {
+            name: 'product_name',
+            dataType: 'varchar(255)'
+        }, {
+            name: 'brand_name',
+            dataType: 'varchar(255)'
+        }, {
+            name: 'variant_name',
+            dataType: 'varchar(255)'
+        }, {
+            name: 'price',
+            dataType: 'float'
+        }, {
+            name: 'image_url',
+            dataType: 'varchar(255)'
         }
     ]
 })
