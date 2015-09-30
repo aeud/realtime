@@ -37,8 +37,8 @@ app.get('/collect', (req, res) => {
     var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress
     ip = /(\d){1,3}\.(\d){1,3}\.(\d){1,3}\.(\d){1,3}/.test(ip) ? ip : '118.189.135.150';
     var visitId = req.query.uid || 'unknown'
-    var variantId = req.query.vid && /^\d+$/g.test(req.query.variant) ? req.query.variant : null
-    var account = req.query.a && /^(default|indonesia|thailand)$/g.test(req.query.a) ? req.query.a : null
+    var variantId = req.query.vid || null
+    var account = req.query.a || null
     var product_name = req.query.p || 'unknown'
     var brand_name = req.query.b || 'unknown'
     var image_url = req.query.i || 'unknown'
@@ -57,7 +57,7 @@ app.get('/collect', (req, res) => {
         price: price,
         image_url: image_url
     }
-    if (variantId && account) {
+    if (/^\d+$/g.test(variantId) && /^(default|indonesia|thailand)$/g.test(account)) {
         insertEvent(event, (err, resp) => {
             insertIp(ip, (err, resp) => {
                 event.latitude = resp.latitude
