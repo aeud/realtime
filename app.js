@@ -62,10 +62,12 @@ app.get('/collect', (req, res) => {
     if (/^\d+$/g.test(variantId) && /^(default|indonesia|thailand)$/g.test(account)) {
         insertEvent(event, (err, resp) => {
             insertIp(ip, (err, resp) => {
-                event.latitude = resp.latitude
-                event.longitude = resp.longitude
-                console.log(resp)
-                io.emit('message', event)
+                if (!err) {
+                    event.latitude = resp.latitude
+                    event.longitude = resp.longitude
+                    console.log(resp)
+                    io.emit('message', event)
+                }
             })
         })
     }
