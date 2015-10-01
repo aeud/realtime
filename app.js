@@ -16,13 +16,15 @@ var insertIp = (ip, callback) => {
     psql.query(geoIp.select(geoIp.star()).from(geoIp).where(geoIp.ip.equals(ip)).toQuery(), (err, resp) => {
         if (!err && resp.rows.length == 0) {
             ipInfo.getInfo(ip, (err, resp) => {
-                var geoIpInstance = {
-                    ip: ip,
-                    latitude: resp.latitude,
-                    longitude: resp.longitude
-                }
-                if (typeof callback != 'undefined') callback(err, geoIpInstance)
-                psql.query(geoIp.insert(geoIpInstance).toQuery())
+                if (!err && resp && resp.latitude && resp.longitude) {
+                    var geoIpInstance = {
+                        ip: ip,
+                        latitude: resp.latitude,
+                        longitude: resp.longitude
+                    }
+                    if (typeof callback != 'undefined') callback(err, geoIpInstance)
+                    psql.query(geoIp.insert(geoIpInstance).toQuery())
+                } else if (typeof callback != 'undefined') callback('Couldn\'t record the IP')
             })
         } else if (typeof callback != 'undefined'){
             if (err) callback(err)
