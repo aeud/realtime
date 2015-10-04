@@ -77,7 +77,7 @@
             });
             if (!quiet) {
                 popup.openOn(map);
-                map.setView(d.c, 6, { animate: true });
+                map.setView(d.c, 6, { animate: true, duration: 1 });
             }
             return {
                 marker: marker,
