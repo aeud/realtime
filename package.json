@@ -13,7 +13,6 @@
     "async": "x",
     "socket.io": "x",
     "request": "x",
-    "md5": "x",
-    "express-session": "x"
+    "md5": "x"
   }
 }
