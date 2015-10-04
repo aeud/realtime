@@ -11,7 +11,7 @@
         body { margin:0; padding:0; }
         #map { position:absolute; top:0; bottom:0; width:100%; }
         .location {
-            font-size: 11px;
+            font-size: 12px;
             text-align: center;
         }
         .image {
@@ -26,7 +26,7 @@
         }
         .brand, .product {
             text-align: center;
-            font-size: 12px;
+            font-size: 13px;
         }
         .brand {
             font-weight: bold;
@@ -42,7 +42,7 @@
             top: 0;
         }
         .leaflet-popup-content {
-            width: 300px !important;
+            width: 250px !important;
         }
     </style>
 </head>
@@ -54,7 +54,7 @@
         var markers = [];
         var socket = io();
         L.mapbox.accessToken = 'pk.eyJ1IjoiYWV1ZGVzIiwiYSI6ImNpZjU0aXc5ajAxczh0cW01NGhydWwzdWQifQ.mXaDZT93baj2pRkhaTl4Yg';
-        var map = L.mapbox.map('map', 'mapbox.satellite')
+        var map = L.mapbox.map('map', '<mapbox class="satellite"></mapbox>')
             .setView([1.28967, 103.85], 6);
         //L.marker([50.5, 30.5]).addTo(map);
         function addMarker (d, quiet) {
