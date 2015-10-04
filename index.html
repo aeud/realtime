@@ -54,7 +54,7 @@
         var markers = [];
         var socket = io();
         L.mapbox.accessToken = 'pk.eyJ1IjoiYWV1ZGVzIiwiYSI6ImNpZjU0aXc5ajAxczh0cW01NGhydWwzdWQifQ.mXaDZT93baj2pRkhaTl4Yg';
-        var map = L.mapbox.map('map', '<mapbox class="satellite"></mapbox>')
+        var map = L.mapbox.map('map', 'mapbox.satellite')
             .setView([1.28967, 103.85], 6);
         //L.marker([50.5, 30.5]).addTo(map);
         function addMarker (d, quiet) {
