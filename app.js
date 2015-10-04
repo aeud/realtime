@@ -8,6 +8,8 @@ var ipInfo = require('./lib/ip-info')
 var async  = require('async')
 var names  = require('./lib/names')
 
+var auth = express.basicAuth('testUser', 'testPass')
+
 sql.setDialect('postgres')
 
 var insertEvent = (event, callback) => {
@@ -82,7 +84,7 @@ app.get('/collect', (req, res) => {
     }
 })
 
-app.get('', (req, res) => {
+app.get('/', auth, (req, res) => {
     res.sendFile(__dirname + '/index.html')
 })
 
