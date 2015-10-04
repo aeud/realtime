@@ -6,9 +6,44 @@
     <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
     <link href='https://api.mapbox.com/mapbox.js/v2.2.2/mapbox.css' rel='stylesheet' />
     <script src="https://cdn.socket.io/socket.io-1.3.5.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
     <style>
         body { margin:0; padding:0; }
         #map { position:absolute; top:0; bottom:0; width:100%; }
+        .location {
+            font-size: 11px;
+            text-align: center;
+        }
+        .image {
+            text-align: center;
+        }
+        .image img {
+            width: 80%;
+        }
+        .leaflet-popup-content {
+            padding-top: 0;
+            padding-bottom: 0;
+        }
+        .brand, .product {
+            text-align: center;
+            font-size: 12px;
+        }
+        .brand {
+            font-weight: bold;
+        }
+        .user {
+            font-size: 14px;
+            position: relative;
+        }
+        .user .event {
+            font-size: 30px;
+            position: absolute;
+            right: 0;
+            top: 0;
+        }
+        .leaflet-popup-content {
+            width: 200px !important;
+        }
     </style>
 </head>
 <body>
@@ -23,14 +58,17 @@
             .setView([50, 35], 5);
         //L.marker([50.5, 30.5]).addTo(map);
         function addMarker (d, quiet) {
+            console.log(d);
             var quiet = quiet || false;
             d.c = [d.latitude, d.longitude];
             var marker = L.marker(d.c);
-            var p = $('<p>').css('min-width', '200px');
-            var img = $('<img/>').attr('src', d.image_url);
-            var brand = $('<span>').html(d.brand_name);
-            var product = $('<span>').html(d.product_name);
-            p.append($('<div>').append(img)).append($('<div>').append(brand).append($('<br/>')).append(product));
+            var p = $('<div>');
+            var user = $('<div>').attr('class', 'user').append($('<i>').attr('class', 'fa fa-user-secret')).append($('<span>').html('&nbsp; ' + d.name)).append($('<div>').attr('class', 'event').append($('<i>').attr('class', 'fa fa-cart-plus')))
+            var location = $('<div>').attr('class', 'location').append($('<i>').attr('class', 'fa fa-map-pin')).append($('<span>').html('&nbsp; ' + d.country + ', ' + d.city))
+            var image = $('<div>').attr('class', 'image').append($('<img/>').attr('src', d.image_url));
+            var brand = $('<div>').attr('class', 'brand').html(d.brand_name);
+            var product = $('<div>').attr('class', 'product').html(d.product_name);
+            p.append(user).append(image).append($('<div>').append(brand).append(product)).append(location);
             var popup = L.popup()
                 .setLatLng(d.c)
                 .setContent(p[0]);
@@ -48,7 +86,7 @@
         }
         socket.on('init', function(data){
             markers = data.map(function(d){
-                return addMarker(d, true);
+                return addMarker(d, false);
             });
         });
         socket.on('message', function(data){

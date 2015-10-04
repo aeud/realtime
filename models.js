@@ -52,6 +52,12 @@ exports.geoIp = sql.define({
         }, {
             name: 'longitude',
             dataType: 'numeric'
+        }, {
+            name: 'country',
+            dataType: 'varchar(255)'
+        }, {
+            name: 'city',
+            dataType: 'varchar(255)'
         }
     ]
 })

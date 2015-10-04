@@ -12,4 +12,5 @@ async.series([
 ], (err, resp) => {
     if (err) throw err
     console.log(resp)
+    process.exit()
 })

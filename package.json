@@ -12,6 +12,7 @@
     "sql": "x",
     "async": "x",
     "socket.io": "x",
-    "request": "x"
+    "request": "x",
+    "md5": "x"
   }
 }
