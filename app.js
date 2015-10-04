@@ -1,14 +1,13 @@
-var app    = require('express')()
-var http   = require('http').Server(app)
-var sql    = require('sql')
-var models = require('./models')
-var psql   = require('./lib/psql')
-var io     = require('socket.io')(http)
-var ipInfo = require('./lib/ip-info')
-var async  = require('async')
-var names  = require('./lib/names')
-
-var auth = app.basicAuth('testUser', 'testPass')
+var app   = require('express')()
+var http      = require('http').Server(app)
+var sql       = require('sql')
+var models    = require('./models')
+var psql      = require('./lib/psql')
+var io        = require('socket.io')(http)
+var ipInfo    = require('./lib/ip-info')
+var async     = require('async')
+var names     = require('./lib/names')
+var basicAuth = require('./lib/basic-auth')
 
 sql.setDialect('postgres')
 
@@ -84,7 +83,7 @@ app.get('/collect', (req, res) => {
     }
 })
 
-app.get('/', auth, (req, res) => {
+app.get('/', basicAuth.auth('luxola', 'awesome'), (req, res) => {
     res.sendFile(__dirname + '/index.html')
 })
 

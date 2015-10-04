@@ -13,6 +13,7 @@
     "async": "x",
     "socket.io": "x",
     "request": "x",
-    "md5": "x"
+    "md5": "x",
+    "basic-auth": "x"
   }
 }
