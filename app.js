@@ -8,7 +8,7 @@ var ipInfo = require('./lib/ip-info')
 var async  = require('async')
 var names  = require('./lib/names')
 
-var auth = express.basicAuth('testUser', 'testPass')
+var auth = app.basicAuth('testUser', 'testPass')
 
 sql.setDialect('postgres')
 
