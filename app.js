@@ -15,6 +15,8 @@ var insertEvent = (event, callback) => {
     psql.query(models.event.insert(event).toQuery(), callback)
 }
 
+var lastEvents = []
+
 var insertIp = (ip, callback) => {
     var geoIp = models.geoIp
     psql.query(geoIp.select(geoIp.star()).from(geoIp).where(geoIp.ip.equals(ip)).toQuery(), (err, resp) => {
@@ -76,6 +78,7 @@ app.get('/collect', (req, res) => {
                     event.city = resp.city
                     event.name = names.generate(visitId)
                     console.log(event)
+                    lastEvents = [event]
                     io.emit('message', event)
                 }
             })
@@ -88,40 +91,7 @@ app.get('/', basicAuth.auth('luxola', 'awesome'), (req, res) => {
 })
 
 io.on('connection', socket => {
-    socket.emit('init', [{
-        ip: '118.189.135.150',
-        created_at: new Date(),
-        visit_id: '4342390d',
-        local_variant_id: '1',
-        account: 'default',
-        product_name: 'Mr. Bunny Essential Kit 471g',
-        brand_name: 'SIGMA BEAUTY',
-        variant_name: 'unknown',
-        price: 0,
-        image_url: 'http://s0.lximg.com/images/pictures/8562/featured_31697a948bb92d150a668459a2ed36185956a55a_1418697248_Bkit_Bunny_Mr_F-copy.jpg',
-        latitude: '1.28967',
-        longitude: '103.85',
-        country: 'Singapore',
-        city: 'Singapore',
-        name: 'Marsha'
-    }])
-    setTimeout(() => socket.emit('message', {
-        ip: '118.189.135.150',
-        created_at: new Date(),
-        visit_id: '4342390d',
-        local_variant_id: '1',
-        account: 'default',
-        product_name: 'Mr. Bunny Essential Kit 471g',
-        brand_name: 'SIGMA BEAUTY',
-        variant_name: 'unknown',
-        price: 0,
-        image_url: 'http://s0.lximg.com/images/pictures/8562/featured_31697a948bb92d150a668459a2ed36185956a55a_1418697248_Bkit_Bunny_Mr_F-copy.jpg',
-        latitude: '1.28967',
-        longitude: '103.85',
-        country: 'Singapore',
-        city: 'Singapore',
-        name: 'Marsha'
-    }), 1000)
+    socket.emit('init', lastEvents)
 })
 
 http.listen(3000, () => {
