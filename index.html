@@ -52,6 +52,15 @@
         .leaflet-popup-content {
             width: 250px !important;
         }
+        #logo {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            z-index: 9999;
+        }
+        .mapbox-logo {
+            display:none;
+        }
     </style>
     <link rel="icon" href="https://delta.luxola.com/favicon.png">
 
@@ -107,7 +116,8 @@
             markers.forEach(function(m){
                 if (m.marker.options.opacity > 0) m.marker.setOpacity(m.marker.options.opacity - 0.1);
             })
-        }, 5000)
+        }, 5000);
+        $('body').append($('<img>').attr('src', 'https://s3-ap-southeast-1.amazonaws.com/luxola-data-reports/perso/sephora-live.png').attr('width', 140).attr('id', 'logo'));
     </script>
 </body>
 </html>
