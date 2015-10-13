@@ -73,8 +73,8 @@
             d.c = [d.latitude, d.longitude];
             var marker = L.marker(d.c);
             var p = $('<div>');
-            var user = $('<div>').attr('class', 'user').append($('<i>').attr('class', 'fa fa-user-secret')).append($('<span>').html('&nbsp; ' + d.name)).append($('<div>').attr('class', 'event').append($('<i>').attr('class', 'fa fa-cart-plus')))
-            var location = $('<div>').attr('class', 'location').append($('<i>').attr('class', 'fa fa-map-pin')).append($('<span>').html('&nbsp; ' + d.country + ', ' + d.city))
+            var user = $('<div>').attr('class', 'user').append($('<i>').attr('class', 'fa fa-user-secret')).append($('<span>').html('&nbsp; ' + d.name)).append($('<div>').attr('class', 'event').append($('<i>').attr('class', 'fa fa-cart-plus').attr('title', 'Added to cart')));
+            var location = $('<div>').attr('class', 'location').append($('<i>').attr('class', 'fa fa-map-pin')).append($('<span>').html('&nbsp; ' + d.country + ', ' + d.city));
             var image = $('<div>').attr('class', 'image').append($('<img/>').attr('src', d.image_url));
             var brand = $('<div>').attr('class', 'brand').html(d.brand_name);
             var product = $('<div>').attr('class', 'product').html(d.product_name);
