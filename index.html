@@ -27,6 +27,9 @@
         .brand, .product {
             text-align: center;
             font-size: 13px;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
         }
         .brand {
             font-weight: bold;
@@ -40,6 +43,10 @@
             position: absolute;
             right: 0;
             top: 0;
+        }
+        .price {
+            font-size: 13px;
+            font-weight: bold;
         }
         .leaflet-popup-content {
             width: 250px !important;
@@ -70,6 +77,7 @@
             var image = $('<div>').attr('class', 'image').append($('<img/>').attr('src', d.image_url));
             var brand = $('<div>').attr('class', 'brand').html(d.brand_name);
             var product = $('<div>').attr('class', 'product').html(d.product_name);
+            var price = $('<div>').attr('class', 'price').html('S$ ' + d.price);
             p.append(user).append(image).append($('<div>').append(brand).append(product)).append(location);
             var popup = L.popup()
                 .setLatLng(d.c)
