@@ -78,7 +78,7 @@
             var brand = $('<div>').attr('class', 'brand').html(d.brand_name);
             var product = $('<div>').attr('class', 'product').html(d.product_name);
             var price = $('<div>').attr('class', 'price').html('S$ ' + d.price);
-            p.append(user).append(image).append($('<div>').append(brand).append(product)).append(location);
+            p.append(user).append(image).append($('<div>').append(brand).append(product).append(price)).append(location);
             var popup = L.popup()
                 .setLatLng(d.c)
                 .setContent(p[0]);
