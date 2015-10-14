@@ -86,8 +86,11 @@ app.get('/collect', (req, res) => {
     }
 })
 
-app.get('/', basicAuth.auth('luxola', 'awesome'), (req, res) => {
+app.get('/2', basicAuth.auth('luxola', 'awesome'), (req, res) => {
     res.sendFile(__dirname + '/index.html')
+})
+app.get('/', basicAuth.auth('luxola', 'awesome'), (req, res) => {
+    res.sendFile(__dirname + '/index2.html')
 })
 
 io.on('connection', socket => {
