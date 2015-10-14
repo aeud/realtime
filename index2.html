@@ -77,7 +77,6 @@
             .setView([1.28967, 103.85], 4);
         //L.marker([50.5, 30.5]).addTo(map);
         function addMarker (d, quiet) {
-            console.log(d);
             var quiet = quiet || false;
             d.c = [d.latitude, d.longitude];
             var marker = L.marker(d.c);
