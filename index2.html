@@ -80,6 +80,35 @@
         .mapbox-logo, .leaflet-top, .leaflet-bottom {
             display:none;
         }
+        .summary {
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 300px;
+            max-height: 100%;
+            z-index: 999;
+            overflow: hidden;
+            display: none;
+        }
+        .element {
+            position: relative;
+        }
+        .summary .element {
+            margin: 5px;
+            padding: 5px;
+            border-radius: 5px;
+            background-color: #fff;
+            min-height: 60px;
+        }
+        .summary .element .image {
+            width: 60px;
+        }
+        .summary .element .content {
+            padding-left: 65px;
+        }
+        .summary .event {
+            display: none;
+        }
     </style>
     <link rel="icon" href="https://delta.luxola.com/favicon.png">
 
@@ -91,6 +120,7 @@
     <script>
         var markers = [];
         var socket = io();
+        var summary = $('<div>').attr('class', 'summary');
         L.mapbox.accessToken = 'pk.eyJ1IjoiYWV1ZGVzIiwiYSI6ImNpZjU0aXc5ajAxczh0cW01NGhydWwzdWQifQ.mXaDZT93baj2pRkhaTl4Yg';
         var map = L.mapbox.map('map', 'mapbox.satellite')
             .setView([1.28967, 103.85], 4);
@@ -107,7 +137,7 @@
             var brand = $('<div>').attr('class', 'brand').html(d.brand_name);
             var product = $('<div>').attr('class', 'product').html(d.product_name);
             var price = $('<div>').attr('class', 'price').html('S$ ' + d.price);
-            p.append(image).append($('<div>').attr('class', 'content').append(user).append(brand).append(product).append(price).append(location)).append(eventIcon);
+            p.attr('class', 'element').append(image).append($('<div>').attr('class', 'content').append(user).append(brand).append(product).append(price).append(location)).append(eventIcon);
             var popup = L.popup()
                 .setLatLng(d.c)
                 .setContent(p[0]);
@@ -118,6 +148,9 @@
                 popup.openOn(map);
                 //map.setView(d.c, 4, { animate: true, duration: 1 });
             }
+            var clone = p.clone();
+            summary.prepend(clone);
+            setTimeout(function(){ clone.remove(); }, 10000);
             return {
                 marker: marker,
                 popup: popup,
@@ -136,7 +169,10 @@
                 if (m.marker.options.opacity > 0) m.marker.setOpacity(m.marker.options.opacity - 0.1);
             })
         }, 5000);
-        $('body').append($('<img>').attr('src', 'https://s3-ap-southeast-1.amazonaws.com/luxola-data-reports/perso/sephora-live.png').attr('width', 140).attr('id', 'logo'));
+        var logo = $('<img>').attr('src', 'https://s3-ap-southeast-1.amazonaws.com/luxola-data-reports/perso/sephora-live.png').attr('width', 140).attr('id', 'logo');
+        $('body').append(logo);
+        $('body').append(summary);
+        logo.click(function(){ summary.show(); });
     </script>
 </body>
 </html>
