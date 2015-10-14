@@ -13,12 +13,28 @@
         .location {
             font-size: 12px;
             text-align: center;
+            position: absolute;
+            bottom: 0;
+            text-align: right;
+            left: 0;
+            right: 0;
+            padding-right: 5px;
         }
         .image {
             text-align: center;
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 95px;
+            min-height: 138px;
         }
         .image img {
-            width: 80%;
+            width: 100%;
+        }
+        .content {
+            padding-left: 100px;
+            padding-bottom: 15px;
         }
         .leaflet-popup-content {
             padding-top: 0;
@@ -37,12 +53,13 @@
         .user {
             font-size: 14px;
             position: relative;
+            text-align: right;
         }
-        .user .event {
-            font-size: 30px;
+        .event {
+            font-size: 20px;
             position: absolute;
-            right: 0;
-            top: 0;
+            top: 10px;
+            left: 105px;
         }
         .price {
             font-size: 15px;
@@ -50,7 +67,9 @@
             text-align: center;
         }
         .leaflet-popup-content {
-            width: 250px !important;
+            width: 350px !important;
+            min-height: 140px !important;
+            position: relative;
         }
         #logo {
             position: absolute;
@@ -81,13 +100,14 @@
             d.c = [d.latitude, d.longitude];
             var marker = L.marker(d.c);
             var p = $('<div>');
-            var user = $('<div>').attr('class', 'user').append($('<i>').attr('class', 'fa fa-user-secret')).append($('<span>').html('&nbsp; ' + d.name)).append($('<div>').attr('class', 'event').append($('<i>').attr('class', 'fa fa-cart-plus').attr('title', 'Added to cart')));
+            var user = $('<div>').attr('class', 'user').append($('<i>').attr('class', 'fa fa-user-secret')).append($('<span>').html('&nbsp; ' + d.name));
+            var eventIcon = $('<div>').attr('class', 'event').append($('<i>').attr('class', 'fa fa-cart-plus').attr('title', 'Added to cart'));
             var location = $('<div>').attr('class', 'location').append($('<i>').attr('class', 'fa fa-map-pin')).append($('<span>').html('&nbsp; ' + d.country + ', ' + d.city));
             var image = $('<div>').attr('class', 'image').append($('<img/>').attr('src', d.image_url));
             var brand = $('<div>').attr('class', 'brand').html(d.brand_name);
             var product = $('<div>').attr('class', 'product').html(d.product_name);
             var price = $('<div>').attr('class', 'price').html('S$ ' + d.price);
-            p.append(user).append(image).append($('<div>').append(brand).append(product).append(price)).append(location);
+            p.append(image).append($('<div>').attr('class', 'content').append(user).append(brand).append(product).append(price).append(location)).append(eventIcon);
             var popup = L.popup()
                 .setLatLng(d.c)
                 .setContent(p[0]);
