@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sephora | Live</title>
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+    <script src="https://cdn.socket.io/socket.io-1.3.5.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
+    <style>
+        body {
+            background: #000;
+        }
+        .list-group-item {
+            margin: 10px 0;
+            padding: 0px 20px;
+        }
+        .list-group-item:first-child,
+        .list-group-item:last-child {
+            border-radius: inherit;
+        }
+    </style>
+    <link rel="icon" href="https://delta.luxola.com/favicon.png">
+</head>
+<body>
+    <div id="board">
+        <div class="container">
+            <header>
+                coucou
+            </header>
+            <div id="content">
+                <ul class="list-group" id="ordersBucket">
+                    <li class="list-group-item">
+                        <div class="row">
+                            <div class="col-lg-1 col-md-1">218961</div>
+                            <div class="col-lg-1 col-md-1">S$ 122.50</div>
+                            <div class="col-lg-1 col-md-1">S$ 162.50</div>
+                            <div class="col-lg-2 col-md-2">S$ 162.50</div>
+                            <div class="col-lg-7 col-md-7">
+                                <img src="http://s3.lximg.com/images/pictures/7821/cart_0293e3842f4ac0116e6d89c22e4e09dc314c873c_1415174127_SKII_pitera_20set.jpg" height="60">
+                                <img src="http://s3.lximg.com/images/pictures/7821/cart_0293e3842f4ac0116e6d89c22e4e09dc314c873c_1415174127_SKII_pitera_20set.jpg" height="60">
+                                <img src="http://s3.lximg.com/images/pictures/7821/cart_0293e3842f4ac0116e6d89c22e4e09dc314c873c_1415174127_SKII_pitera_20set.jpg" height="60">
+                                <img src="http://s3.lximg.com/images/pictures/7821/cart_0293e3842f4ac0116e6d89c22e4e09dc314c873c_1415174127_SKII_pitera_20set.jpg" height="60">
+                            </div>
+                        </div>
+                    </li>
+                    <li class="list-group-item">
+                        <div class="row">
+                            <div class="col-lg-3 col-md-3">Dapibus ac facilisis in</div>
+                            <div class="col-lg-3 col-md-3">Dapibus ac facilisis in</div>
+                            <div class="col-lg-3 col-md-3">Dapibus ac facilisis in</div>
+                            <div class="col-lg-3 col-md-3">Dapibus ac facilisis in</div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <footer></footer>
+        </div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js" integrity="sha512-K1qjQ+NcF2TYO/eI3M6v8EiNYZfA95pQumfvcVrTHtwQVDG+aHRqLi/ETn2uB+1JqwYqVG3LIvdm9lj6imS/pQ==" crossorigin="anonymous"></script>
+    <script>
+        var socket = io();
+        socket.on('init', function(data){
+            console.log(data);
+        });
+        socket.on('order', function(data){
+            var col1 = $('<div>').attr('class', 'col-lg-3 col-md-3').html('toto');
+            var col2 = $('<div>').attr('class', 'col-lg-3 col-md-3').html('toto');
+            var col3 = $('<div>').attr('class', 'col-lg-3 col-md-3').html('toto');
+            var col4 = $('<div>').attr('class', 'col-lg-3 col-md-3').html('toto');
+            var row = $('<div>').attr('class', 'row').append(col1).append(col2).append(col3).append(col4);
+            var li = $('<li>').attr('class', 'list-group-item').css('display', 'block').append(row);
+            $('#ordersBucket').prepend(li.slideToggle());
+            console.log(data);
+        });
+    </script>
+</body>
+</html>
